@@ -164,6 +164,8 @@ class TurbineClient:
 
         response = self._http.get(ENDPOINTS["markets"], params=params or None)
         markets = response.get("markets", []) if isinstance(response, dict) else response
+        if markets is None:
+            return []
         return [Market.from_dict(m) for m in markets]
 
     def get_market(self, market_id: str) -> Market:
